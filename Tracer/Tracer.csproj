@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TraceResultInfo\TraceResult.cs" />
+    <Compile Include="ITracer.cs" />
     <Compile Include="Tracer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TraceResultInfo\TraceMethodInfo.cs" />
+    <Compile Include="TraceResultInfo\TraceThreadInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

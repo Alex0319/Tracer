@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tracer
 {
@@ -19,6 +16,7 @@ namespace Tracer
         }
 
         internal long ExecutionTime => firstNestedTracedMethods.Sum(method => method.ExecutionTime);
+        internal List<MethodController> ChildMethods => firstNestedTracedMethods;
 
         internal void StartMethodTrace(MethodController method)
         {

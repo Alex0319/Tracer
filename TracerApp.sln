@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TracerApp\TestAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer", "Tracer\Tracer.csproj", "{ACAF20B8-BFFA-42DC-B6A7-100A97219078}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{7C4B3E37-DC8E-480C-B2AC-3F8CD682DDA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ACAF20B8-BFFA-42DC-B6A7-100A97219078}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACAF20B8-BFFA-42DC-B6A7-100A97219078}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACAF20B8-BFFA-42DC-B6A7-100A97219078}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C4B3E37-DC8E-480C-B2AC-3F8CD682DDA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C4B3E37-DC8E-480C-B2AC-3F8CD682DDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C4B3E37-DC8E-480C-B2AC-3F8CD682DDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C4B3E37-DC8E-480C-B2AC-3F8CD682DDA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

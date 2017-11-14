@@ -48,5 +48,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parser\Parser.csproj">
+      <Project>{7c4b3e37-dc8e-480c-b2ac-3f8cd682dda0}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tracer\Tracer.csproj">
+      <Project>{acaf20b8-bffa-42dc-b6a7-100a97219078}</Project>
+      <Name>Tracer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

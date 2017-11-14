@@ -1,4 +1,4 @@
-﻿using Tracer.TraceResultInfo;
+﻿using Tracer.TraceResultData;
 
 namespace Tracer
 {
