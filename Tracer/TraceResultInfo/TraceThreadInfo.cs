@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Tracer.TraceResultData
+namespace Tracer.TraceResultInfo
 {
-    class TraceThreadData
+    public class TraceThreadInfo
     {
+        public List<TraceMethodInfo> ChildMethods { get; set; }
+        public long ExecutionTime { get; set; }
     }
 }

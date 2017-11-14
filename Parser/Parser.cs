@@ -10,21 +10,21 @@ namespace Parser
     public class Parser: IParser
     {
         private static Parser _instance;
-        private readonly Dictionary<String, String> _argsDictionary;
+        private Dictionary<char, string> _argsDictionary;
 
         private Parser()
         {
-            _argsDictionary = new Dictionary<string, string>()
+            _argsDictionary = new Dictionary<char, string>()
             {
-                { "f", null },
-                { "o", null },
-                { "h", null }
+                { 'f', null },
+                { 'o', null },
+                { 'h', null }
             };
         }
 
         public static Parser Instance => _instance ?? (_instance = new Parser());
 
-        public Dictionary<string, string> Parse(string[] args)
+        public Dictionary<char, string> Parse(string[] args)
         {
             if (args.Length == 0)
             {

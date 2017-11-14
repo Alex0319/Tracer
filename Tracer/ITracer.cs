@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tracer.TraceResultInfo;
 
 namespace Tracer
 {
@@ -10,6 +6,6 @@ namespace Tracer
     {
         void StartTrace();
         void StopTrace();
- //       TraceResult GetTraceResult();
+        TraceResult GetTraceResult();
     }
 }
