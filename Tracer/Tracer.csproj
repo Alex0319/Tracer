@@ -40,12 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TraceResultInfo\TraceResult.cs" />
+    <Compile Include="MethodController.cs" />
+    <Compile Include="ThreadController.cs" />
+    <Compile Include="TraceController.cs" />
+    <Compile Include="TraceResultBuilder\MethodDataBuilder.cs" />
+    <Compile Include="TraceResultBuilder\ThreadDataBuilder.cs" />
+    <Compile Include="TraceResultBuilder\TraceDataBuilder.cs" />
+    <Compile Include="TraceResultData\TraceResult.cs" />
     <Compile Include="ITracer.cs" />
     <Compile Include="Tracer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TraceResultInfo\TraceMethodInfo.cs" />
-    <Compile Include="TraceResultInfo\TraceThreadInfo.cs" />
+    <Compile Include="TraceResultData\TraceMethodData.cs" />
+    <Compile Include="TraceResultData\TraceThreadData.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
