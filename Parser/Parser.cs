@@ -10,11 +10,11 @@ namespace Parser
     public class Parser: IParser
     {
         private static Parser _instance;
-        private Dictionary<char, string> argsDictionary;
+        private readonly Dictionary<char, string> _argsDictionary;
 
         private Parser()
         {
-            argsDictionary = new Dictionary<char, string>()
+            _argsDictionary = new Dictionary<char, string>()
             {
                 { 'f', null },
                 { 'o', null },
@@ -24,19 +24,24 @@ namespace Parser
 
         public static Parser Instance => _instance ?? (_instance = new Parser());
 
-        public Dictionary<char, string> Parse(string[] args)
+        public bool Parse(string[] args)
         {
             if (args.Length == 0)
             {
-                return null;
+                return false;
             }
             var parser = new FluentCommandLineParser();
-            foreach (var param in argsDictionary)
+            foreach (var param in _argsDictionary)
             {
-                parser.Setup<string>(param.Key).Callback(val => argsDictionary[param.Key] = val);
+                parser.Setup<string>(param.Key).Callback(val => _argsDictionary[param.Key] = val);
             }
             parser.Parse(args);
-            return argsDictionary;
+            return true;
+        }
+
+        public string GetArgValue(char argName)
+        {
+            return _argsDictionary.ContainsKey(argName) ? _argsDictionary[argName] : null;
         }
     }
 }

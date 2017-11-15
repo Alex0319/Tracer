@@ -8,6 +8,7 @@ namespace Parser
 {
     public interface IParser
     {
-        Dictionary<char, string> Parse(string[] args);
+        bool Parse(string[] args);
+        string GetArgValue(char argName);
     }
 }
