@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,13 +50,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Formatter\Formatter.csproj">
+      <Project>{7598dfd3-8a9a-4e03-b595-51032239e157}</Project>
+      <Name>Formatter</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Parser\Parser.csproj">
       <Project>{7c4b3e37-dc8e-480c-b2ac-3f8cd682dda0}</Project>
       <Name>Parser</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Tracer\Tracer.csproj">
       <Project>{acaf20b8-bffa-42dc-b6a7-100a97219078}</Project>
       <Name>Tracer</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

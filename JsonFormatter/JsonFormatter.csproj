@@ -30,11 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,18 +42,6 @@
   <ItemGroup>
     <Compile Include="JsonFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FormatterInterface\FormatterInterface.csproj">
-      <Project>{3911ED40-203E-47AE-88E0-E8C14B746311}</Project>
-      <Name>FormatterInterface</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Tracer\Tracer.csproj">
-      <Project>{ACAF20B8-BFFA-42DC-B6A7-100A97219078}</Project>
-      <Name>Tracer</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

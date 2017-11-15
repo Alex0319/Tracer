@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Tracer.TraceResultData;
+﻿using Tracer.TraceResultData;
 
 namespace Formatter
 {

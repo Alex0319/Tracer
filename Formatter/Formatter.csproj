@@ -46,14 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FormatterInterface\FormatterInterface.csproj">
-      <Project>{3911ED40-203E-47AE-88E0-E8C14B746311}</Project>
+      <Project>{3911ed40-203e-47ae-88e0-e8c14b746311}</Project>
       <Name>FormatterInterface</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Tracer\Tracer.csproj">
       <Project>{acaf20b8-bffa-42dc-b6a7-100a97219078}</Project>
       <Name>Tracer</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

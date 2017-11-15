@@ -47,7 +47,6 @@
     <ProjectReference Include="..\Tracer\Tracer.csproj">
       <Project>{acaf20b8-bffa-42dc-b6a7-100a97219078}</Project>
       <Name>Tracer</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
