@@ -5,11 +5,11 @@ namespace Tracer.TraceResultBuilder
 {
     internal class MethodDataBuilder
     {
-        private readonly MethodController method;
+        private readonly MethodController _method;
 
         internal MethodDataBuilder(MethodController method)
         {
-            this.method = method;
+            _method = method;
         }
 
         internal TraceMethodData GetResult()
@@ -19,7 +19,7 @@ namespace Tracer.TraceResultBuilder
 
         private TraceMethodData CreateMethodDataResult()
         {
-            TraceMethodData traceMethodData = method.TraceMethodData;
+            TraceMethodData traceMethodData = _method.TraceMethodData;
             traceMethodData.ChildMethods = GetChildList();
             return traceMethodData;
         }
@@ -27,7 +27,7 @@ namespace Tracer.TraceResultBuilder
         private List<TraceMethodData> GetChildList()
         {
             List<TraceMethodData> traceMethodDatas = new List<TraceMethodData>();
-            foreach (var childMethod in method.ChildMethods)
+            foreach (var childMethod in _method.ChildMethods)
             {
                 traceMethodDatas.Add(new MethodDataBuilder(childMethod).GetResult());
             }

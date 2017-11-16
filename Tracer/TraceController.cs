@@ -17,7 +17,7 @@ namespace Tracer
 
         internal void StartMethodTrace(int threadId, MethodBase methodBase)
         {
-            ThreadController threadController = threadControllers.GetOrAdd((int) threadId, new ThreadController());
+            ThreadController threadController = threadControllers.GetOrAdd(threadId, new ThreadController());
             threadController.StartMethodTrace(new MethodController(methodBase));
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Fclp;
+using Fclp.Internals.Extensions;
 
 namespace Parser
 {
@@ -35,9 +36,14 @@ namespace Parser
             return true;
         }
 
-        public string GetArgValue(char argName)
+        public string GetFormat()
         {
-            return _argsDictionary.ContainsKey(argName) ? _argsDictionary[argName] : null;
+           return _argsDictionary['f'];
+        }
+
+        public string GetOutputFilePath()
+        {
+            return _argsDictionary['o'];
         }
     }
 }

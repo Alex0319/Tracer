@@ -5,7 +5,7 @@ using Tracer;
 
 namespace TracerApp
 {
-    class Program
+    internal class Program
     {
         private static readonly IParser parser = Parser.Parser.Instance;
         private static readonly ITracer tracer = Tracer.Tracer.Instance;
@@ -16,12 +16,14 @@ namespace TracerApp
             parser.Parse(args);
             TestClass testClass = new TestClass(tracer);
             testClass.FirstTest();
-            formatter.Format(tracer.GetTraceResult(), parser.GetArgValue('f'));
+            string result = formatter.Format(tracer.GetTraceResult(), parser.GetFormat(), parser.GetOutputFilePath());
+            if(result != null)
+                Console.WriteLine(result);
             Console.ReadLine();
         }
-    }
+     }
 
-    class TestClass
+    internal class TestClass
     {
         private static ITracer tracer;
 
@@ -41,7 +43,8 @@ namespace TracerApp
         private void SecondTest()
         {
             tracer.StartTrace();
-            ThirdTest();
+            for (int i = 0; i < 4; i++)
+                ThirdTest();
             Thread.Sleep(3);
             tracer.StopTrace();
         }
@@ -49,7 +52,8 @@ namespace TracerApp
         private void ThirdTest()
         {
             tracer.StartTrace();
-            FourthTest();
+            for (int i = 0; i < 10; i++)
+                FourthTest();
             Thread.Sleep(3);
             tracer.StopTrace();
         }
