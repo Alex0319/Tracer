@@ -9,33 +9,33 @@ namespace Tracer
 {
     public class Tracer: ITracer
     {
-        private static Tracer instance;
-        private static TraceController traceController;
+        private static Tracer _instance;
+        private static TraceController _traceController;
 
         private Tracer()
         {
-            traceController = new TraceController();
+            _traceController = new TraceController();
         }
 
-        public static Tracer Instance => instance ?? (instance = new Tracer());
+        public static Tracer Instance => _instance ?? (_instance = new Tracer());
 
         public void StartTrace()
         {
             StackFrame frame = new StackFrame(1);
             MethodBase currentMethod = frame.GetMethod();
-            traceController.StartMethodTrace(Thread.CurrentThread.ManagedThreadId, currentMethod);
+            _traceController.StartMethodTrace(Thread.CurrentThread.ManagedThreadId, currentMethod);
         }
 
         public void StopTrace()
         {
             StackFrame frame = new StackFrame(1);
             MethodBase currentMethod = frame.GetMethod();
-            traceController.StopMethodTrace(Thread.CurrentThread.ManagedThreadId, currentMethod);
+            _traceController.StopMethodTrace(Thread.CurrentThread.ManagedThreadId, currentMethod);
         }
 
         public TraceResult GetTraceResult()
         {
-            return new TraceDataBuilder(traceController.ThreadControllers).GetResult();
+            return new TraceDataBuilder(_traceController.ThreadControllers).GetResult();
         }
     }
 }

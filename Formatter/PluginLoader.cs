@@ -8,24 +8,29 @@ namespace Formatter
 {
     internal class PluginLoader
     {
-        private static Dictionary<string ,ITraceResultFormatter> _plugins;
-
-        internal Dictionary<string,ITraceResultFormatter> Plugins => _plugins;
-
-        internal void LoadPlugins()
+        internal Dictionary<string, ITraceResultFormatter> LoadPlugins()
         {
-            _plugins = new Dictionary<string, ITraceResultFormatter>();
-            string folder = AppDomain.CurrentDomain.BaseDirectory;
-            string[] files = Directory.GetFiles(folder, "*.dll");
+            Dictionary<string, ITraceResultFormatter> formatters = new Dictionary<string, ITraceResultFormatter>();
+            string folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Plugins");
 
-            foreach (var file in files)
+            if (Directory.Exists(folder))
             {
-                ITraceResultFormatter formatterPlugin = IsPlugin(file);
-                if (formatterPlugin != null)
+                string[] files = Directory.GetFiles(folder, "*.dll");
+
+                foreach (var file in files)
                 {
-                    _plugins.Add(formatterPlugin.GetFormat(), formatterPlugin);
+                    var formatterPlugin = IsPlugin(file);
+                    if (formatterPlugin != null)
+                    {
+                        formatters.Add(formatterPlugin.GetFormat(), formatterPlugin);
+                    }
                 }
             }
+            else
+            {
+                Directory.CreateDirectory(folder);
+            }
+            return formatters;
         }
 
         private ITraceResultFormatter IsPlugin(byte[] file)
@@ -33,10 +38,9 @@ namespace Formatter
             try
             {
                 Assembly assembly = Assembly.Load(file);
-                foreach (Type type in assembly.GetTypes())
+                foreach (Type type in assembly.GetExportedTypes())
                 {
-                    Type interfaceType = type.GetInterface("ITraceResultFormatter");
-                    if (interfaceType != null)
+                    if(type.IsClass && typeof(ITraceResultFormatter).IsAssignableFrom(type))
                     {
                         return (ITraceResultFormatter)Activator.CreateInstance(type);
                     }
