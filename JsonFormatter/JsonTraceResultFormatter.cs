@@ -51,18 +51,18 @@ namespace JsonFormatter
             foreach (var threadInfo in threadsInfo)
             {
                 threadElementBuilder.Clear();
-                threadElementBuilder.Append((char)32, nestedLevel + Indent);
+                threadElementBuilder.Append((char)32, nestedLevel + Indent*2);
                 threadElementBuilder.AppendLine("{");
                 threadElementBuilder.AppendFormat("\"id\" : {0},\n\"time\" : \"{1}ms\",\n\"ChildMethods\" : [", threadInfo.Key,
                     threadInfo.Value.ExecutionTime);
                 if (threadInfo.Value.ChildMethods.Count != 0)
                 {
                     threadElementBuilder.Append(Environment.NewLine);
-                    FormatMethodsInfo(threadElementBuilder, threadInfo.Value.ChildMethods, nestedLevel + Indent);
-                    threadElementBuilder.Append((char)32, nestedLevel + Indent);
+                    FormatMethodsInfo(threadElementBuilder, threadInfo.Value.ChildMethods, nestedLevel + Indent*3);
+                    threadElementBuilder.Append((char)32, nestedLevel + Indent*2);
                 }
                 threadElementBuilder.AppendLine("]");
-                threadElementBuilder.Append((char)32, nestedLevel + Indent);
+                threadElementBuilder.Append((char)32, nestedLevel + Indent*2);
                 threadElementBuilder.Append("},");
                 traceResultBuilder.AppendLine(threadElementBuilder.ToString());
             }
