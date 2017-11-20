@@ -4,7 +4,7 @@ namespace Parser
     public interface IParser
     {
         bool Parse(string[] args);
-        string GetFormat();
-        string GetOutputFilePath();
+        string GetArg(string argName);
+        string GetArgsInfo(string getInfo);
     }
 }

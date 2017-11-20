@@ -4,7 +4,7 @@ namespace Tracer.TraceResultData
 {
     public class TraceThreadData
     {
-        public List<TraceMethodData> ChildMethods { get; set; }
         public long ExecutionTime { get; set; }
+        public List<TraceMethodData> ChildMethods { get; set; }
     }
 }

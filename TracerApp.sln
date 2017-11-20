@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonFormatter", "JsonFormat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormatterInterface", "FormatterInterface\FormatterInterface.csproj", "{3911ED40-203E-47AE-88E0-E8C14B746311}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlFormatter", "YamlFormatter\YamlFormatter.csproj", "{9430C25F-ED5B-413B-A484-291CE0EC1BE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{3911ED40-203E-47AE-88E0-E8C14B746311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3911ED40-203E-47AE-88E0-E8C14B746311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3911ED40-203E-47AE-88E0-E8C14B746311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9430C25F-ED5B-413B-A484-291CE0EC1BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9430C25F-ED5B-413B-A484-291CE0EC1BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9430C25F-ED5B-413B-A484-291CE0EC1BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9430C25F-ED5B-413B-A484-291CE0EC1BE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

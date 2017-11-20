@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Formatter.StandartFormatters;
 using FormatterInterface;
 using Tracer.TraceResultData;
@@ -14,8 +15,7 @@ namespace Formatter
         private readonly string _consoleTypeName;
 
         internal Dictionary<string, ITraceResultFormatter> Formatters => _formatters;
-
-
+        
         public Formatter()
         {
             var loader = new PluginLoader();
@@ -37,9 +37,13 @@ namespace Formatter
         public string Format(TraceResult traceResult, string formatType, string filePath)
         {
             bool isFilePathValid = CheckFilePath(filePath);
+            if (formatType == null)
+            {
+                return $"Format is not specified\n{GetInfo()}";
+            }
             if (!_formatters.ContainsKey(formatType))
             {
-                formatType = _consoleTypeName;
+                return $"{formatType} format is not available\n{GetInfo()}";
             }
             if (formatType.Equals(_consoleTypeName))
             {
@@ -47,20 +51,33 @@ namespace Formatter
             }
             if (!isFilePathValid)
             {
-                return filePath + "File or file directory not found";
+                if (filePath == null)
+                    return "Output is not specified";
+                return filePath  + " : file or file directory not found";
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
             {
                 _formatters[formatType].Format(traceResult, fileStream);
-
             }
-            return null;
+            return "Traced info succesfully saved";
         }
 
         private bool CheckFilePath(string filePath)
         {
             return filePath != null && Directory.Exists(Path.GetDirectoryName(filePath));
+        }
+
+        public string GetInfo()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("Available formats:");
+            foreach (var format in _formatters.Keys)
+            {
+                stringBuilder.Append("   ");
+                stringBuilder.Append(format);
+            }
+            return stringBuilder.ToString();
         }
     }
 }

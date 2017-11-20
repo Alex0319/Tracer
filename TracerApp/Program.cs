@@ -13,56 +13,65 @@ namespace TracerApp
 
         static void Main(string[] args)
         {
-            parser.Parse(args);
-            TestClass testClass = new TestClass(tracer);
-            testClass.FirstTest();
-            string result = formatter.Format(tracer.GetTraceResult(), parser.GetFormat(), parser.GetOutputFilePath());
-            if(result != null)
-                Console.WriteLine(result);
-            Console.ReadLine();
+            if (!parser.Parse(args))
+            {
+                Console.WriteLine(parser.GetArgsInfo(formatter.GetInfo()));
+            }
+            else
+            {
+                TestClass testClass = new TestClass(tracer);
+                testClass.FirstTest();
+                string result = formatter.Format(tracer.GetTraceResult(), parser.GetArg("f"), parser.GetArg("o"));
+                if (result != null)
+                    Console.WriteLine(result);
+            }
+            Console.WriteLine("Press any char to exit...");
+            Console.ReadKey();
         }
      }
 
     internal class TestClass
     {
-        private static ITracer tracer;
+        private static ITracer _tracer;
 
         public TestClass(ITracer tracer)
         {
-            TestClass.tracer = tracer;
+           _tracer = tracer;
         }
 
         public void FirstTest()
         {
-            tracer.StartTrace();
+            _tracer.StartTrace();
             Thread.Sleep(3);
             SecondTest();
-            tracer.StopTrace();
+            _tracer.StopTrace();
         }
 
         private void SecondTest()
         {
-            tracer.StartTrace();
+            _tracer.StartTrace();
             for (int i = 0; i < 4; i++)
+            {
                 ThirdTest();
+                FourthTest();
+            }
             Thread.Sleep(3);
-            tracer.StopTrace();
+            _tracer.StopTrace();
         }
 
         private void ThirdTest()
         {
-            tracer.StartTrace();
-            for (int i = 0; i < 10; i++)
-                FourthTest();
+            _tracer.StartTrace();
             Thread.Sleep(3);
-            tracer.StopTrace();
+            FourthTest();
+            _tracer.StopTrace();
         }
 
         private void FourthTest()
         {
-            tracer.StartTrace();
+            _tracer.StartTrace();
             Thread.Sleep(3);
-            tracer.StopTrace();
+            _tracer.StopTrace();
         }
     }
 }
