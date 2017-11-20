@@ -39,76 +39,65 @@ namespace YamlFormatter
         private string GetTraceResultString(TraceResult traceResult)
         {
             StringBuilder traceResultBuilder = new StringBuilder();
-            StringBuilder threadElementBuilder = new StringBuilder();
             var threadsInfo = traceResult.ResultInfo;
 
             traceResultBuilder.AppendLine("---");
             traceResultBuilder.AppendLine("threads:");
 
             foreach (var threadInfo in threadsInfo)
-            {
-                threadElementBuilder.Clear();
-                threadElementBuilder.Append((char)32, Indent);
-                threadElementBuilder.AppendFormat("id: {0}\n", threadInfo.Key);
-                threadElementBuilder.Append(FormatObjectProperties(threadInfo.Value, Indent));
-                if (threadInfo.Value.ChildMethods.Count != 0)
-                {
-//                    FormatMethodsInfo(threadElementBuilder, threadInfo.Value.ChildMethods, nestedLevel + 2);
-                }
-
-                traceResultBuilder.AppendLine(threadElementBuilder.ToString());
-            }
+                FormatElement(traceResultBuilder, threadInfo.Value, Indent, $"id: {threadInfo.Key}\n");
             traceResultBuilder.AppendLine("...");
             return traceResultBuilder.ToString();
         }
 
-        private string FormatObjectProperties(object obj, int indent)
+        private void FormatElement(StringBuilder parentElement, object element, int nestedLevel, string initStr)
         {
+            StringBuilder childBuilder = new StringBuilder();
+            childBuilder.Append((char) 32, nestedLevel);
+            childBuilder.Append(initStr);
+            FormatObjectProperties(childBuilder, element, nestedLevel);
+            parentElement.Append(childBuilder);
+        }
+
+        private void FormatObjectProperties(StringBuilder parentElement, object obj, int nestedLevel)
+        {
+            bool isAddFirstIndent = !parentElement[parentElement.Length - 2].Equals('-');
+            nestedLevel = isAddFirstIndent ? nestedLevel : nestedLevel + 2;
             StringBuilder stringBuilder = new StringBuilder();
 
             foreach (var property in obj.GetType().GetProperties())
             {
-                stringBuilder.Append((char)32, indent);
+                if (isAddFirstIndent)
+                    stringBuilder.Append((char) 32, nestedLevel);
+                else
+                    isAddFirstIndent = true;
                 stringBuilder.Append(property.Name);
                 stringBuilder.Append(": ");
                 var value = property.GetValue(obj);
-                if (value.GetType().IsPrimitive)
+                if (value.GetType().IsPrimitive || value is string)
                     stringBuilder.Append(value);
                 else
                 {
                     stringBuilder.AppendLine();
-                    FormatMethodsInfo(stringBuilder, (IEnumerable<TraceMethodData>)value, indent + Indent);
+                    FormatMethodsInfo(stringBuilder, (IEnumerable<TraceMethodData>) value, nestedLevel + Indent);
+                    stringBuilder.Remove(stringBuilder.Length - 2, 2);
                 }
                 stringBuilder.AppendLine();
             }
-            return stringBuilder.ToString();
+            parentElement.Append(stringBuilder);
         }
 
-
-        private void FormatMethodsInfo(StringBuilder parentElement, IEnumerable<TraceMethodData> childMethods, int nestedLevel)
+        private void FormatMethodsInfo(StringBuilder parentElement, IEnumerable<TraceMethodData> childMethods,
+            int nestedLevel)
         {
             if (childMethods == null || !childMethods.Any())
             {
+                parentElement.Remove(parentElement.Length - 2, 2);
                 parentElement.Append("[]");
                 return;
             }
-            StringBuilder childBuilder = new StringBuilder();
             foreach (var method in childMethods)
-            {
-                childBuilder.Clear();
-                childBuilder.Append((char)32, nestedLevel);
-                childBuilder.Append("- ");
-
-                if (method.ChildMethods.Count != 0)
-                {
-                    childBuilder.Append(Environment.NewLine);
-                    FormatMethodsInfo(childBuilder, method.ChildMethods, nestedLevel + 3);
-                    childBuilder.Append((char)32, nestedLevel + 2);
-                }
-
-                parentElement.AppendLine(childBuilder.ToString());
-            }
+                FormatElement(parentElement, method, nestedLevel, "- ");
         }
     }
 }
-
