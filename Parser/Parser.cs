@@ -24,10 +24,10 @@ namespace Parser
 
         public static Parser Instance => _instance ?? (_instance = new Parser());
 
-        public bool Parse(string[] args)
+        public bool CanBeParsed(string[] args)
         {
             bool isNotHelpArg = true;
-            if (args.Length == 0 || !CheckArgsCount(Array.FindAll(args, x => x.Contains("--"))))
+            if (args.Length == 0 || !CheckArgsCount(args.Where(x => x.Contains("--")).ToArray()))
             {
                 return false;
             }
@@ -46,7 +46,7 @@ namespace Parser
             return isNotHelpArg;
         }
 
-        public string GetArg(string argName)
+        public string GetArgumentValue(string argName)
         {
             if(_argsDictionary.ContainsKey(argName))
                 return _argsDictionary[argName];
@@ -61,7 +61,7 @@ namespace Parser
                 stringBuilder.AppendLine("Uncorrect command format\n");
             }
             stringBuilder.AppendLine("  --f      Select format for trace result");
-            stringBuilder.Append((char) 32, 11);
+            stringBuilder.Append(' ', 11);
             stringBuilder.AppendLine(formatInfo);
             stringBuilder.Append(
                 "  --o      Select output file for trace result. If file is not specified result will be shown in the console");

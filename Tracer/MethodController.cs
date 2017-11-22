@@ -30,18 +30,18 @@ namespace Tracer
         internal long ExecutionTime => stopWatch.ElapsedMilliseconds;
 
         internal void AddChild(MethodController childMethod)
-            {
-                firstLevelChildMethods.Add(childMethod);
-            }
-
-            internal void StopMethodTrace()
-            {
-                stopWatch.Stop();
-            }
-
-            internal bool IsEquals(MethodController method)
-            {
-                return methodBase == method.methodBase;
-            }
+        {
+            firstLevelChildMethods.Add(childMethod);
         }
+
+        internal void StopMethodTrace()
+        {
+            stopWatch.Stop();
+        }
+
+        internal bool IsEquals(MethodController method)
+        {
+            return methodBase == method.methodBase;
+        }
+    }
 }

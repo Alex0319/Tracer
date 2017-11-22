@@ -3,8 +3,8 @@ namespace Parser
 {
     public interface IParser
     {
-        bool Parse(string[] args);
-        string GetArg(string argName);
+        bool CanBeParsed(string[] args);
+        string GetArgumentValue(string argName);
         string GetArgsInfo(string getInfo);
     }
 }

@@ -16,7 +16,7 @@ namespace Formatter
 
         internal Dictionary<string, ITraceResultFormatter> Formatters => _formatters;
         
-        public Formatter()
+        private Formatter()
         {
             var loader = new PluginLoader();
             _formatters = loader.LoadPlugins();
@@ -65,7 +65,12 @@ namespace Formatter
 
         private bool CheckFilePath(string filePath)
         {
-            return filePath != null && Directory.Exists(Path.GetDirectoryName(filePath));
+            if (filePath != null)
+            {
+                string directoryName = Path.GetDirectoryName(filePath);
+                return string.IsNullOrEmpty(directoryName) || Directory.Exists(directoryName);
+            }
+            return false;
         }
 
         public string GetInfo()

@@ -13,7 +13,7 @@ namespace TracerApp
 
         static void Main(string[] args)
         {
-            if (!parser.Parse(args))
+            if (!parser.CanBeParsed(args))
             {
                 Console.WriteLine(parser.GetArgsInfo(formatter.GetInfo()));
             }
@@ -21,7 +21,7 @@ namespace TracerApp
             {
                 TestClass testClass = new TestClass(tracer);
                 testClass.FirstTest();
-                string result = formatter.Format(tracer.GetTraceResult(), parser.GetArg("f"), parser.GetArg("o"));
+                string result = formatter.Format(tracer.GetTraceResult(), parser.GetArgumentValue("f"), parser.GetArgumentValue("o"));
                 if (result != null)
                     Console.WriteLine(result);
             }
