@@ -23,7 +23,7 @@ namespace Tracer
             Name = methodBase.Name,
             ClassName = methodBase.DeclaringType.Name,
             ParamsCount = methodBase.GetParameters().Length,
-            ExecutionTime = this.ExecutionTime
+            ExecutionTime = ExecutionTime
         };
 
         internal List<MethodController> ChildMethods => firstLevelChildMethods;

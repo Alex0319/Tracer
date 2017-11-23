@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using Formatter.StandartFormatters;
 using FormatterInterface;
@@ -25,6 +29,13 @@ namespace Formatter
             _formatters.Add(formatter.GetFormat(), formatter);
             formatter = new XmlTraceResultFormatter();
             _formatters.Add(formatter.GetFormat(), formatter);
+            ResourceManager rm = new ResourceManager("Formatter.Resource",
+                Assembly.GetExecutingAssembly());
+            Console.WriteLine(rm.GetString("FileNotSpecifiedMessage"));
+            foreach (DictionaryEntry res in rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+            {
+                Console.WriteLine($@"{res.Key} - {res.Value}");
+            }
         }
 
         public static Formatter Instance => _instance ?? (_instance = new Formatter());
