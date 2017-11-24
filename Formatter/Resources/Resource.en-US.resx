@@ -124,10 +124,10 @@
     <value>: file or file directory not found</value>
   </data>
   <data name="FormatNotAvailableMessage" xml:space="preserve">
-    <value>format is not available</value>
+    <value> format is not available</value>
   </data>
   <data name="FormatNotSpecifiedMessage" xml:space="preserve">
-    <value>Format is not specified</value>
+    <value>Format is not specified </value>
   </data>
   <data name="FormatsHeader" xml:space="preserve">
     <value>Available formats:</value>

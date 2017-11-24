@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using System.Threading;
 using Formatter.StandartFormatters;
 using FormatterInterface;
 using Tracer.TraceResultData;
@@ -16,6 +17,7 @@ namespace Formatter
     {
         private static Formatter _instance;
         private static Dictionary<string, ITraceResultFormatter> _formatters;
+        private static Dictionary<string, string> errorMessages;
         private readonly string _consoleTypeName;
 
         internal Dictionary<string, ITraceResultFormatter> Formatters => _formatters;
@@ -29,12 +31,13 @@ namespace Formatter
             _formatters.Add(formatter.GetFormat(), formatter);
             formatter = new XmlTraceResultFormatter();
             _formatters.Add(formatter.GetFormat(), formatter);
-            ResourceManager rm = new ResourceManager("Formatter.Resource",
+
+            errorMessages = new Dictionary<string, string>();
+            ResourceManager rm = new ResourceManager("Formatter.Resources.Resource",
                 Assembly.GetExecutingAssembly());
-            Console.WriteLine(rm.GetString("FileNotSpecifiedMessage"));
-            foreach (DictionaryEntry res in rm.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+            foreach (DictionaryEntry res in rm.GetResourceSet(Thread.CurrentThread.CurrentCulture, true, true))
             {
-                Console.WriteLine($@"{res.Key} - {res.Value}");
+                errorMessages.Add(res.Key.ToString(), res.Value.ToString());
             }
         }
 
@@ -50,11 +53,11 @@ namespace Formatter
             bool isFilePathValid = CheckFilePath(filePath);
             if (formatType == null)
             {
-                return $"Format is not specified\n{GetInfo()}";
+                return $"{errorMessages["FormatNotSpecifiedMessage"]}\n{GetInfo()}";
             }
             if (!_formatters.ContainsKey(formatType))
             {
-                return $"{formatType} format is not available\n{GetInfo()}";
+                return $"{formatType}{errorMessages["FormatNotAvailableMessage"]}\n{GetInfo()}";
             }
             if (formatType.Equals(_consoleTypeName))
             {
@@ -63,15 +66,15 @@ namespace Formatter
             if (!isFilePathValid)
             {
                 if (filePath == null)
-                    return "Output is not specified";
-                return filePath  + " : file or file directory not found";
+                    return errorMessages["FileNotSpecifiedMessage"];
+                return filePath  + errorMessages["FilePathNotFoundMessage"];
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
             {
                 _formatters[formatType].Format(traceResult, fileStream);
             }
-            return "Traced info succesfully saved";
+            return errorMessages["SuccessfullyTracedMessage"];
         }
 
         private bool CheckFilePath(string filePath)
@@ -87,7 +90,7 @@ namespace Formatter
         public string GetInfo()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Available formats:");
+            stringBuilder.Append(errorMessages["FormatsHeader"]);
             foreach (var format in _formatters.Keys)
             {
                 stringBuilder.Append("   ");
