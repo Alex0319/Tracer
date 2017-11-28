@@ -24,7 +24,9 @@ namespace TracerApp
                 testClass.FirstTest();
                 string result = Formatter.Format(Tracer.GetTraceResult(), Parser.GetArgumentValue("f"), Parser.GetArgumentValue("o"));
                 if (result != null)
+                {
                     Console.WriteLine(result);
+                }
             }
             Console.WriteLine("Press any char to exit...");
             Console.ReadKey();

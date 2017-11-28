@@ -23,7 +23,7 @@ namespace JsonFormatter
             }
             if (stream == null)
             {
-                throw new ArgumentNullException(nameof(traceResult));
+                throw new ArgumentNullException(nameof(stream));
             }
             using (var streamWriter = new StreamWriter(stream))
             {

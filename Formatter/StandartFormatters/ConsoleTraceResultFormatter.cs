@@ -10,7 +10,8 @@ namespace Utilities.Formatter.StandartFormatters
     public class ConsoleTraceResultFormatter: ITraceResultFormatter
     {
         private const string Name = "console";
-        private const int Indent = 4;
+        private const char Space = (char) 32;
+        private readonly int Indent = 4;
 
         public string GetFormat()
         {
@@ -61,15 +62,17 @@ namespace Utilities.Formatter.StandartFormatters
             foreach (var method in childMethods)
             {
                 childBuilder.Clear();
-                childBuilder.Append((char)32, nestedLevel);
+                childBuilder.Append(Space, nestedLevel);
                 childBuilder.Append("method");
                 childBuilder.AppendFormat("  name=\"{0}\"  time=\"{1}ms\"  class=\"{2}\"  params=\"{3}\" ", method.Name, method.ExecutionTime, method.ClassName, method.ParamsCount);
+
                 if (method.ChildMethods.Count != 0)
                 {
                     childBuilder.Append(Environment.NewLine);
                     FormatMethodsInfo(childBuilder, method.ChildMethods, nestedLevel + Indent);
-                    childBuilder.Append((char)32, nestedLevel);
+                    childBuilder.Append(Space, nestedLevel);
                 }
+
                 childBuilder.Append("method");
                 parentElement.AppendLine(childBuilder.ToString());
             }

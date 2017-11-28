@@ -11,6 +11,7 @@ namespace YamlFormatter
     public class YamlTraceResultFormatter : ITraceResultFormatter
     {
         private const string Name = "yaml";
+        private const char Space = (char) 32;
         private readonly int Indent = 4;
 
         public string GetFormat()
@@ -43,7 +44,10 @@ namespace YamlFormatter
             traceResultBuilder.AppendLine("threads:");
 
             foreach (var threadInfo in threadsInfo)
+            {
                 FormatElement(traceResultBuilder, threadInfo.Value, Indent, $"id: {threadInfo.Key}\n");
+            }
+
             traceResultBuilder.AppendLine("...");
             return traceResultBuilder.ToString();
         }
@@ -51,9 +55,11 @@ namespace YamlFormatter
         private void FormatElement(StringBuilder parentElement, object element, int nestedLevel, string initStr)
         {
             StringBuilder childBuilder = new StringBuilder();
-            childBuilder.Append((char) 32, nestedLevel);
+            childBuilder.Append(Space, nestedLevel);
             childBuilder.Append(initStr);
+
             FormatObjectProperties(childBuilder, element, nestedLevel);
+
             parentElement.Append(childBuilder);
         }
 
@@ -66,18 +72,28 @@ namespace YamlFormatter
             foreach (var property in obj.GetType().GetProperties())
             {
                 if (isAddFirstIndent)
-                    stringBuilder.Append((char) 32, nestedLevel);
+                {
+                    stringBuilder.Append(Space, nestedLevel);
+                }
                 else
+                {
                     isAddFirstIndent = true;
+                }
                 stringBuilder.Append(property.Name);
                 stringBuilder.Append(": ");
+
                 var value = property.GetValue(obj);
+
                 if (value.GetType().IsPrimitive || value is string)
+                {
                     stringBuilder.Append(value);
+                }
                 else
                 {
                     stringBuilder.AppendLine();
+
                     FormatMethodsInfo(stringBuilder, (IEnumerable<TraceMethodData>) value, nestedLevel + Indent);
+
                     stringBuilder.Remove(stringBuilder.Length - 2, 2);
                 }
                 stringBuilder.AppendLine();
@@ -95,7 +111,9 @@ namespace YamlFormatter
                 return;
             }
             foreach (var method in childMethods)
+            {
                 FormatElement(parentElement, method, nestedLevel, "- ");
+            }
         }
     }
 }

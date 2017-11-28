@@ -13,7 +13,7 @@ namespace Utilities.Tracer
 
         internal MethodController(MethodBase methodBase)
         {
-            this._methodBase = methodBase;
+            _methodBase = methodBase;
             _firstLevelChildMethods = new List<MethodController>();
             _stopWatch = Stopwatch.StartNew();
         }

@@ -9,12 +9,12 @@ namespace Utilities.Tracer.TraceResultBuilder
 
         internal TraceDataBuilder(IDictionary<int, ThreadController> threadsInfo)
         {
-            this._threadsInfo = threadsInfo;
+            _threadsInfo = threadsInfo;
         }
 
         internal TraceResult GetResult()
         {
-            return new TraceResult()
+            return new TraceResult
             {
                 ResultInfo = GetTraceResult()
             };

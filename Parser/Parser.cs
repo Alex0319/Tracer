@@ -8,6 +8,7 @@ namespace Utilities.Parser
 {
     public class Parser: IParser
     {
+        private const char Space = (char) 32;
         private static Parser _instance;
         private readonly Dictionary<string, string> _argsDictionary;
 
@@ -30,17 +31,20 @@ namespace Utilities.Parser
             {
                 return false;
             }
+
             var parser = new FluentCommandLineParser();
             foreach (var param in _argsDictionary)
             {
                 parser.Setup<string>(param.Key[0]).Callback(val => _argsDictionary[param.Key] = val);
             }
+
             parser.SetupHelp("?", "help", "h").Callback(() =>
             {
                 isNotHelpArg = false;
                 if(args.Length > 1)
                     _argsDictionary["h"] = "help";
             });
+
             parser.Parse(args);
             return isNotHelpArg;
         }
@@ -57,11 +61,11 @@ namespace Utilities.Parser
             {
                 stringBuilder.AppendLine("Uncorrect command format\n");
             }
+
             stringBuilder.AppendLine("  --f      Select format for trace result");
-            stringBuilder.Append(' ', 11);
+            stringBuilder.Append(Space, 11);
             stringBuilder.AppendLine(formatInfo);
-            stringBuilder.Append(
-                "  --o      Select output file for trace result. If file is not specified result will be shown in the console");
+            stringBuilder.Append("  --o      Select output file for trace result. If file is not specified result will be shown in the console");
             return stringBuilder.ToString();
         }
 

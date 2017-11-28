@@ -36,7 +36,9 @@ namespace Utilities.Formatter.StandartFormatters
             {
                 XElement threadElement = new XElement("thread");
                 threadElement.Add(new XAttribute("id", threadInfo.Key), new XAttribute("time", threadInfo.Value.ExecutionTime + "ms"));
+
                 FormatMethodsInfo(threadElement, threadInfo.Value.ChildMethods);
+
                 rootElement.Add(threadElement);
             }
 
@@ -54,6 +56,7 @@ namespace Utilities.Formatter.StandartFormatters
                     new XAttribute("class", method.ClassName),
                     new XAttribute("params", method.ParamsCount));
                 parentElement.Add(methodElement);
+
                 FormatMethodsInfo(methodElement, method.ChildMethods);
             }
         }

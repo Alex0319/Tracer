@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -20,7 +21,7 @@ namespace Utilities.Formatter
         private readonly string _consoleTypeName;
 
         internal Dictionary<string, ITraceResultFormatter> Formatters => _formatters;
-        
+
         private Formatter()
         {
             var loader = new PluginLoader();
@@ -34,9 +35,17 @@ namespace Utilities.Formatter
             _errorMessages = new Dictionary<string, string>();
             ResourceManager rm = new ResourceManager(GetType().Namespace + ".Resources.Resource",
                 Assembly.GetExecutingAssembly());
-            foreach (DictionaryEntry res in rm.GetResourceSet(Thread.CurrentThread.CurrentCulture, true, true))
+            try
             {
-                _errorMessages.Add(res.Key.ToString(), res.Value.ToString());
+                LoadResources(rm, Thread.CurrentThread.CurrentCulture);
+            }
+            catch (MissingManifestResourceException)
+            {
+                LoadResources(rm, CultureInfo.GetCultureInfo("en"));
+            }
+            finally
+            {
+                rm.ReleaseAllResources();
             }
         }
 
@@ -65,8 +74,10 @@ namespace Utilities.Formatter
             if (!isFilePathValid)
             {
                 if (filePath == null)
+                {
                     return _errorMessages["FileNotSpecifiedMessage"];
-                return filePath  + _errorMessages["FilePathNotFoundMessage"];
+                }
+                return filePath + _errorMessages["FilePathNotFoundMessage"];
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
@@ -74,6 +85,14 @@ namespace Utilities.Formatter
                 _formatters[formatType].Format(traceResult, fileStream);
             }
             return _errorMessages["SuccessfullyTracedMessage"];
+        }
+
+        private void LoadResources(ResourceManager rm, CultureInfo cultureInfo)
+        {
+            foreach (DictionaryEntry res in rm.GetResourceSet(cultureInfo, true, true))
+            {
+                _errorMessages.Add(res.Key.ToString(), res.Value.ToString());
+            }           
         }
 
         private bool CheckFilePath(string filePath)
