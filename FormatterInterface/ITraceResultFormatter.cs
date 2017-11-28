@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
 namespace FormatterInterface
 {

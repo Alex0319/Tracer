@@ -1,47 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
-namespace Tracer
+namespace Utilities.Tracer
 {
     internal class MethodController
     {
-        private readonly List<MethodController> firstLevelChildMethods;
-        private readonly MethodBase methodBase;
-        private readonly Stopwatch stopWatch;
+        private readonly List<MethodController> _firstLevelChildMethods;
+        private readonly MethodBase _methodBase;
+        private readonly Stopwatch _stopWatch;
 
         internal MethodController(MethodBase methodBase)
         {
-            this.methodBase = methodBase;
-            firstLevelChildMethods = new List<MethodController>();
-            stopWatch = Stopwatch.StartNew();
+            this._methodBase = methodBase;
+            _firstLevelChildMethods = new List<MethodController>();
+            _stopWatch = Stopwatch.StartNew();
         }
 
         internal TraceMethodData TraceMethodData => new TraceMethodData()
         {
-            Name = methodBase.Name,
-            ClassName = methodBase.DeclaringType.Name,
-            ParamsCount = methodBase.GetParameters().Length,
+            Name = _methodBase.Name,
+            ClassName = _methodBase.DeclaringType.Name,
+            ParamsCount = _methodBase.GetParameters().Length,
             ExecutionTime = ExecutionTime
         };
 
-        internal List<MethodController> ChildMethods => firstLevelChildMethods;
-        internal long ExecutionTime => stopWatch.ElapsedMilliseconds;
+        internal List<MethodController> ChildMethods => _firstLevelChildMethods;
+        internal long ExecutionTime => _stopWatch.ElapsedMilliseconds;
 
         internal void AddChild(MethodController childMethod)
         {
-            firstLevelChildMethods.Add(childMethod);
+            _firstLevelChildMethods.Add(childMethod);
         }
 
         internal void StopMethodTrace()
         {
-            stopWatch.Stop();
+            _stopWatch.Stop();
         }
 
         internal bool IsEquals(MethodController method)
         {
-            return methodBase == method.methodBase;
+            return _methodBase == method._methodBase;
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
-using Tracer.TraceResultBuilder;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultBuilder;
+using Utilities.Tracer.TraceResultData;
 
-namespace Tracer
+namespace Utilities.Tracer
 {
     public class Tracer: ITracer
     {

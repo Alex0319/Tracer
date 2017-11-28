@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Threading;
-using Parser;
-using Tracer;
+using Utilities.Parser;
+using Utilities.Formatter;
+using Utilities.Tracer;
 
 namespace TracerApp
 {
     internal class Program
     {
-        private static readonly IParser parser = Parser.Parser.Instance;
-        private static readonly ITracer tracer = Tracer.Tracer.Instance;
-        private static readonly Formatter.Formatter formatter = Formatter.Formatter.Instance;
+        private static readonly IParser Parser = Utilities.Parser.Parser.Instance;
+        private static readonly ITracer Tracer = Utilities.Tracer.Tracer.Instance;
+        private static readonly Formatter Formatter = Formatter.Instance;
 
         static void Main(string[] args)
         {
-            if (!parser.CanBeParsed(args))
+            if (!Parser.CanBeParsed(args))
             {
-                Console.WriteLine(parser.GetArgsInfo(formatter.GetInfo()));
+                Console.WriteLine(Parser.GetArgsInfo(Formatter.GetInfo()));
             }
             else
             {
-                TestClass testClass = new TestClass(tracer);
+                TestClass testClass = new TestClass(Tracer);
                 testClass.FirstTest();
-                string result = formatter.Format(tracer.GetTraceResult(), parser.GetArgumentValue("f"), parser.GetArgumentValue("o"));
+                string result = Formatter.Format(Tracer.GetTraceResult(), Parser.GetArgumentValue("f"), Parser.GetArgumentValue("o"));
                 if (result != null)
                     Console.WriteLine(result);
             }
@@ -63,7 +64,10 @@ namespace TracerApp
         {
             _tracer.StartTrace();
             Thread.Sleep(3);
-            FourthTest();
+            for (int i = 0; i < 20; i++)
+            {
+                FourthTest();
+            }
             _tracer.StopTrace();
         }
 

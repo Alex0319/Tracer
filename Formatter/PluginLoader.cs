@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using FormatterInterface;
 
-namespace Formatter
+namespace Utilities.Formatter
 {
     internal class PluginLoader
     {

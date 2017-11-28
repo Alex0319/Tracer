@@ -2,7 +2,7 @@
 using System.IO;
 using FormatterInterface;
 using Newtonsoft.Json;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
 namespace JsonFormatter
 {

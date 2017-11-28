@@ -1,5 +1,4 @@
-﻿
-namespace Parser
+﻿namespace Utilities.Parser
 {
     public interface IParser
     {

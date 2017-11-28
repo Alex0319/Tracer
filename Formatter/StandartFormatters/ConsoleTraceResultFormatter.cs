@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FormatterInterface;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
-namespace Formatter.StandartFormatters
+namespace Utilities.Formatter.StandartFormatters
 {
     public class ConsoleTraceResultFormatter: ITraceResultFormatter
     {

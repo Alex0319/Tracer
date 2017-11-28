@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Tracer
+namespace Utilities.Tracer
 {
     internal class TraceController
     {

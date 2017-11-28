@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
-namespace Tracer.TraceResultBuilder
+namespace Utilities.Tracer.TraceResultBuilder
 {
     internal class MethodDataBuilder
     {

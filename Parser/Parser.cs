@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Fclp;
 using Fclp.Internals.Extensions;
 
-namespace Parser
+namespace Utilities.Parser
 {
     public class Parser: IParser
     {
@@ -14,7 +13,7 @@ namespace Parser
 
         private Parser()
         {
-            _argsDictionary = new Dictionary<string, string>()
+            _argsDictionary = new Dictionary<string, string>
             {
                 { "f", null },
                 { "o", null },
@@ -48,9 +47,7 @@ namespace Parser
 
         public string GetArgumentValue(string argName)
         {
-            if(_argsDictionary.ContainsKey(argName))
-                return _argsDictionary[argName];
-            return null;
+            return _argsDictionary.ContainsKey(argName) ? _argsDictionary[argName] : null;
         }
 
         public string GetArgsInfo(string formatInfo)
@@ -70,12 +67,7 @@ namespace Parser
 
         private bool CheckArgsCount(string[] args)
         {
-            foreach (var arg in args)
-            {
-                if (!_argsDictionary.ContainsKey(arg.Substring(2)))
-                    return false;
-            }
-            return true;
+            return args.All(arg => _argsDictionary.ContainsKey(arg.Substring(2)));
         }
     }
 }

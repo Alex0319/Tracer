@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tracer.TraceResultData
+namespace Utilities.Tracer.TraceResultData
 {
     public class TraceMethodData
     {

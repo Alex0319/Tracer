@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Threading;
-using Formatter.StandartFormatters;
 using FormatterInterface;
-using Tracer.TraceResultData;
+using Utilities.Formatter.StandartFormatters;
+using Utilities.Tracer.TraceResultData;
 
-namespace Formatter
+namespace Utilities.Formatter
 {
     public class Formatter
     {
         private static Formatter _instance;
         private static Dictionary<string, ITraceResultFormatter> _formatters;
-        private static Dictionary<string, string> errorMessages;
+        private static Dictionary<string, string> _errorMessages;
         private readonly string _consoleTypeName;
 
         internal Dictionary<string, ITraceResultFormatter> Formatters => _formatters;
@@ -32,12 +31,12 @@ namespace Formatter
             formatter = new XmlTraceResultFormatter();
             _formatters.Add(formatter.GetFormat(), formatter);
 
-            errorMessages = new Dictionary<string, string>();
-            ResourceManager rm = new ResourceManager("Formatter.Resources.Resource",
+            _errorMessages = new Dictionary<string, string>();
+            ResourceManager rm = new ResourceManager(GetType().Namespace + ".Resources.Resource",
                 Assembly.GetExecutingAssembly());
             foreach (DictionaryEntry res in rm.GetResourceSet(Thread.CurrentThread.CurrentCulture, true, true))
             {
-                errorMessages.Add(res.Key.ToString(), res.Value.ToString());
+                _errorMessages.Add(res.Key.ToString(), res.Value.ToString());
             }
         }
 
@@ -53,11 +52,11 @@ namespace Formatter
             bool isFilePathValid = CheckFilePath(filePath);
             if (formatType == null)
             {
-                return $"{errorMessages["FormatNotSpecifiedMessage"]}\n{GetInfo()}";
+                return $"{_errorMessages["FormatNotSpecifiedMessage"]}\n{GetInfo()}";
             }
             if (!_formatters.ContainsKey(formatType))
             {
-                return $"{formatType}{errorMessages["FormatNotAvailableMessage"]}\n{GetInfo()}";
+                return $"{formatType}{_errorMessages["FormatNotAvailableMessage"]}\n{GetInfo()}";
             }
             if (formatType.Equals(_consoleTypeName))
             {
@@ -66,15 +65,15 @@ namespace Formatter
             if (!isFilePathValid)
             {
                 if (filePath == null)
-                    return errorMessages["FileNotSpecifiedMessage"];
-                return filePath  + errorMessages["FilePathNotFoundMessage"];
+                    return _errorMessages["FileNotSpecifiedMessage"];
+                return filePath  + _errorMessages["FilePathNotFoundMessage"];
             }
 
             using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
             {
                 _formatters[formatType].Format(traceResult, fileStream);
             }
-            return errorMessages["SuccessfullyTracedMessage"];
+            return _errorMessages["SuccessfullyTracedMessage"];
         }
 
         private bool CheckFilePath(string filePath)
@@ -90,7 +89,7 @@ namespace Formatter
         public string GetInfo()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(errorMessages["FormatsHeader"]);
+            stringBuilder.Append(_errorMessages["FormatsHeader"]);
             foreach (var format in _formatters.Keys)
             {
                 stringBuilder.Append("   ");

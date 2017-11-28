@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using Tracer.TraceResultData;
+using Utilities.Tracer.TraceResultData;
 
-namespace Tracer.TraceResultBuilder
+namespace Utilities.Tracer.TraceResultBuilder
 {
     internal class ThreadDataBuilder
     {
-        private ThreadController thread;
+        private readonly ThreadController _thread;
 
         internal ThreadDataBuilder(ThreadController thread)
         {
-            this.thread = thread;
+            _thread = thread;
         }
 
         internal TraceThreadData GetResult()
@@ -22,7 +22,7 @@ namespace Tracer.TraceResultBuilder
             List<TraceMethodData> childList = GetChildList();
             TraceThreadData threadData = new TraceThreadData()
             {
-                ExecutionTime = thread.ExecutionTime,
+                ExecutionTime = _thread.ExecutionTime,
                 ChildMethods = childList
             };
             return threadData;
@@ -31,7 +31,7 @@ namespace Tracer.TraceResultBuilder
         private List<TraceMethodData> GetChildList()
         {
             List<TraceMethodData> traceMethods = new List<TraceMethodData>();
-            foreach (var childMethod in thread.ChildMethods)
+            foreach (var childMethod in _thread.ChildMethods)
             {
                 traceMethods.Add(new MethodDataBuilder(childMethod).GetResult());
             }

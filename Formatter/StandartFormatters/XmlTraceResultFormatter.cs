@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Xml.Linq;
-
-using FormatterInterface;
-using Tracer.TraceResultData;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
+using FormatterInterface;
+using Utilities.Tracer.TraceResultData;
 
-namespace Formatter
+namespace Utilities.Formatter.StandartFormatters
 {
     public class XmlTraceResultFormatter : ITraceResultFormatter
     {
