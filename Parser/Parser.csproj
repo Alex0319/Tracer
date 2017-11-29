@@ -47,4 +47,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll" "$(SolutionDir)$(SolutionName)\bin\$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

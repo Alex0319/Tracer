@@ -60,4 +60,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll" "$(SolutionDir)$(SolutionName)\bin\$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

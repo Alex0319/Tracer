@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 using Utilities.Parser;
 using Utilities.Formatter;
@@ -14,19 +15,26 @@ namespace TracerApp
 
         static void Main(string[] args)
         {
-            if (!Parser.CanBeParsed(args))
+            try
             {
-                Console.WriteLine(Parser.GetArgsInfo(Formatter.GetInfo()));
-            }
-            else
-            {
-                TestClass testClass = new TestClass(Tracer);
-                testClass.FirstTest();
-                string result = Formatter.Format(Tracer.GetTraceResult(), Parser.GetArgumentValue("f"), Parser.GetArgumentValue("o"));
-                if (result != null)
+                if (!Parser.CanBeParsed(args))
                 {
-                    Console.WriteLine(result);
+                    Console.WriteLine(Parser.GetArgsInfo(Formatter.GetInfo()));
                 }
+                else
+                {
+                    TestClass testClass = new TestClass(Tracer);
+                    testClass.FirstTest();
+                    string result = Formatter.Format(Tracer.GetTraceResult(), Parser.GetArgumentValue("f"), Parser.GetArgumentValue("o"));
+                    if (result != null)
+                    {
+                        Console.WriteLine(result);
+                    }
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine("Add to folder with program dll " + e.FileName);
             }
             Console.WriteLine("Press any char to exit...");
             Console.ReadKey();
